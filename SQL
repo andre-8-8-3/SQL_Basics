@@ -1,0 +1,156 @@
+#データ型の種類	データ型
+#整数型	int型、bit型
+#浮動小数点型	float型
+#通貨型	money型
+#日付型	date型、datetime型
+#文字列型	varchar型、text型
+#バイナリ型	binary型
+
+
+
+#ターミナル
+psql database-sample
+#PostgreSQL
+CREATE TABLE sampletable(id integer,name varchar(20),age integer);
+#PostgreSQL
+\dt
+
+#PostgreSQL
+INSERT INTO sampletable (id, name, age) VALUES
+(1, 'suzuki', 20),
+(2, 'satou', 18),
+(3, 'tanaka', 40),
+(4, 'saitou', 33),
+(5, 'yamamoto', 29),
+(6, 'naitou', 50),
+(7, 'okada', 45),
+(8, 'higashi', 16),
+(9, 'sasaki', 31),
+(10, 'kanazawa', 30);
+
+#PostgreSQL #SELECT
+SELECT * FROM sampletable;
+#出力内容
+id |   name   | age
+----+----------+-----
+  1 | suzuki   |  20
+  2 | satou    |  18
+  3 | tanaka   |  40
+  4 | saitou   |  33
+  5 | yamamoto |  29
+  6 | naitou   |  50
+  7 | okada    |  45
+  8 | higashi  |  16
+  9 | sasaki   |  31
+ 10 | kanazawa |  30
+
+#PostgreSQL #3-3. WHERE
+SELECT * FROM sampletable WHERE age > 30;
+
+#出力内容
+ id |  name   | age
+----+---------+-----
+  3 | tanaka  |  40
+  4 | saitou  |  33
+  6 | naitou  |  50
+  7 | okada   |  45
+  9 | sasaki  |  31
+#PostgreSQL #AND
+ELECT * FROM sampletable WHERE age > 30 AND age %2=0;
+
+#出力結果
+ id |  name  | age
+----+--------+-----
+  3 | tanaka |  40
+  6 | naitou |  50
+
+#PostgreSQL #OR
+SELECT * FROM sampletable WHERE id=2 or name='satou';
+#出力内容
+ id | name  | age
+----+-------+-----
+  2 | satou |  18
+#PostgreSQL #IN
+SELECT * FROM sampletable WHERE name IN ('yamamoto','saitou');
+
+#出力内容
+id |   name   | age
+----+----------+-----
+  4 | saitou   |  33
+  5 | yamamoto |  29
+
+#PostgreSQL #LIKE
+SELECT * FROM sampletable WHERE name LIKE '%to%';
+
+#出力内容
+ id |   name   | age
+----+----------+-----
+  2 | satou    |  18
+  4 | saitou   |  33
+  5 | yamamoto |  29
+  6 | naitou   |  50
+#PostgreSQL #as
+SELECT id AS no, name AS 名前 FROM sampletable;
+
+#出力内容
+ no |   名前
+----+----------
+  1 | suzuki
+  2 | satou
+  3 | tanaka
+  4 | saitou
+  5 | yamamoto
+  6 | naitou
+  7 | okada
+  8 | higashi
+  9 | sasaki
+ 10 | kanazawa
+#PostgreSQL #BETWEEN a AND b
+SELECT * FROM sampletable WHERE id BETWEEN 3 AND 5;
+
+#出力内容
+ id |   name   | age
+----+----------+-----
+  3 | tanaka   |  40
+  4 | saitou   |  33
+  5 | yamamoto |  29
+#PostgreSQL #ORDER BY
+SELECT * FROM sampletable ORDER BY age asc;
+
+
+#出力内容
+id |   name   | age
+----+----------+-----
+  8 | higashi  |  16
+  2 | satou    |  18
+  1 | suzuki   |  20
+  5 | yamamoto |  29
+ 10 | kanazawa |  30
+  9 | sasaki   |  31
+  4 | saitou   |  33
+  3 | tanaka   |  40
+  7 | okada    |  45
+  6 | naitou   |  50
+#PostgreSQL #CASE
+SELECT name,age, CASE WHEN age >= 30 THEN '30over' ELSE '30under' END AS 年齢チェック FROM sampletable;
+
+#出力内容
+name   | age | 年齢チェック
+----------+-----+--------------
+ suzuki   |  20 | 30under
+ satou    |  18 | 30under
+ tanaka   |  40 | 30over
+ saitou   |  33 | 30over
+ yamamoto |  29 | 30under
+ naitou   |  50 | 30over
+ okada    |  45 | 30over
+ higashi  |  16 | 30under
+ sasaki   |  31 | 30over
+ kanazawa |  30 | 30over
+
+#PostgreSQL
+exit
+
+もしくは
+
+\q
